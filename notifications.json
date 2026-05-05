@@ -1,0 +1,32 @@
+{
+  "notifications": [
+    {
+      "id": 1,
+      "type": "timetable",
+      "message": "Your next class is Data Structures at 10:00 AM",
+      "target": "student",
+      "time": "09:50",
+      "status": "unread"
+    },
+    {
+      "id": 2,
+      "type": "exam",
+      "message": "Mid exam for DBMS on 25-Apr-2026",
+      "target": "student",
+      "date": "2026-04-25",
+      "status": "unread"
+    },
+    {
+      "id": 3,
+      "type": "data",
+      "message": "New study material uploaded for AI subject",
+      "target": "student",
+      "status": "unread"
+    }
+  ]
+[
+    {
+        "message": "Exam tomorrow"
+    }
+]
+}

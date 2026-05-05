@@ -1,64 +1,30 @@
-from data import timetable, exams
+from day1 import run as day1
+from day2 import run as day2
+from day3 import run as day3
+from day4 import run as day4
+from day5 import run as day5
 
-def chatbot():
-    print("🎓 Welcome to College AI Assistant 🤖\n")
-    
-    name = input("Enter your name: ")
-    print(f"\nHello {name}! Ask me about timetable, subjects, exams.")
-    print("Type 'bye' to exit.\n")
-    
-    while True:
-        user = input("You: ").lower()
-        
-        # Greetings
-        if any(word in user for word in ["hello", "hi", "hey"]):
-            print("Bot: Hi! How can I help you?\n")
-        
-        elif "how are you" in user:
-            print("Bot: I'm fine! How can I assist you?\n")
-        
-        # Weekly Timetable
-        elif "timetable" in user or "schedule" in user:
-            print("\n📅 Weekly Timetable:\n")
-            for day, schedule in timetable.items():
-                print(f"{day}:")
-                for time, subject in schedule.items():
-                    print(f"  {time} → {subject}")
-                print()
-        
-        # Specific Day
-        elif any(day.lower() in user for day in timetable.keys()):
-            for day in timetable.keys():
-                if day.lower() in user:
-                    print(f"\n📅 {day} Timetable:")
-                    for time, subject in timetable[day].items():
-                        print(f"{time} → {subject}")
-                    print()
-        
-        # Subjects
-        elif "subject" in user:
-            subjects = set()
-            for day in timetable.values():
-                for sub in day.values():
-                    subjects.add(sub)
-            print("\n📚 Subjects:")
-            for sub in subjects:
-                print(f"- {sub}")
-            print()
-        
-        # Exam Info
-        elif "exam" in user:
-            print("\n📝 Exam Details:")
-            print(f"Mid Exams: {exams['mid_exam']['start_date']} to {exams['mid_exam']['end_date']}")
-            print(f"Final Exams: {exams['final_exam']['start_date']} to {exams['final_exam']['end_date']}\n")
-        
-        # Exit
-        elif user == "bye":
-            print("Bot: Goodbye! Have a nice day 😊")
-            break
-        
-        # Unknown
-        else:
-            print("Bot: Sorry, I didn't understand. Please try again.\n")
+print("🎓 AI Student Chatbot Project")
+print("1. Day 1 - Basic Chatbot")
+print("2. Day 2 - Data Chatbot")
+print("3. Day 3 - NLP Chatbot")
+print("4. Day 4 - JSON Chatbot")
+print("5. Day 5 - Login System")
 
-chatbot()
+
+choice = input("Enter your choice: ")
+
+if choice == "1":
+    day1()
+
+elif choice == "2":
+    day2()
+
+elif choice == "3":
+    day3()
+
+elif choice == "4":
+    day4()
+
+else:
+    print("Invalid choice")

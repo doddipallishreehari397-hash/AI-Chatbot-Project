@@ -1,0 +1,46 @@
+{
+  "schedule": [
+    {
+      "date": "20-04-2026",
+      "date_text": "20-04-2026 (MONDAY)",
+      "day": "MONDAY",
+      "course_code": "23CS0909",
+      "course_name": "Cloud Computing for AI"
+    },
+    {
+      "date": "22-04-2026", 
+      "date_text": "22-04-2026 (WEDNESDAY)",
+      "day": "WEDNESDAY",
+      "course_code": "23CS0910",
+      "course_name": "Big Data Analytics & AI Applications"
+    },
+    {
+      "date": "27-04-2026",
+      "date_text": "27-04-2026 (MONDAY)", 
+      "day": "MONDAY",
+      "course_code": "23CS0911",
+      "course_name": "Full Stack AI Development"
+    },
+    {
+      "date": "29-04-2026",
+      "date_text": "29-04-2026 (WEDNESDAY)",
+      "day": "MONDAY",
+      "course_code": "23CS0925", 
+      "course_name": "Blockchain for AI"
+    },
+    {
+      "date": "01-05-2026",
+      "date_text": "01-05-2026 (FRIDAY)",
+      "day": "FRIDAY",
+      "course_code": "23CS0929",
+      "course_name": "Cybersecurity & AI-driven Threat Detection"
+    },
+    {
+      "date": "04-05-2026",
+      "date_text": "04-05-2026 (MONDAY)",
+      "day": "MONDAY", 
+      "course_code": "23CE0153",
+      "course_name": "SEP"
+    }
+  ]
+}

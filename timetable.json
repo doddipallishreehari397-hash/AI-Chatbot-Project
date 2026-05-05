@@ -1,0 +1,136 @@
+
+{
+  "class": "III CAI",
+  "timings": {
+    "hour_1": "9.15-10.05",
+    "hour_2": "10.05-10.55", 
+    "break": "10.55-11.05",
+    "hour_3": "11.05-11.55",
+    "hour_4": "11.55-12.45",
+    "lunch_break": "12.45-1.25",
+    "hour_5": "1.25-2.15",
+    "hour_6": "2.15-3.05",
+    "hour_7": "3.05-3.50"
+  },
+  "timetable": {
+    "MON": {
+      "1": "BCAI",
+      "2": "CS",
+      "3": "SEP", 
+      "4": "FSD",
+      "5": "SOFT SKILLS",
+      "6": "SOFT SKILLS",
+      "7": "CCAI"
+    },
+    "TUE": {
+      "1": "FSD",
+      "2": "IPR",
+      "3": "BCAI",
+      "4": "CCAI", 
+      "5": "CS",
+      "6": "SEP",
+      "7": "BDAI"
+    },
+    "WED": {
+      "1": "CCAI",
+      "2": "CS",
+      "3": "FSD",
+      "4": "BDAI",
+      "5": "BCAI", 
+      "6": "IPR",
+      "7": "SEP"
+    },
+    "THU": {
+      "1": "CS",
+      "2": "CCAI",
+      "3": "BDAI",
+      "4": "FSD",
+      "5": "SEP",
+      "6": "BCAI", 
+      "7": "CCAI"
+    },
+    "FRI": {
+      "1": "BDAI",
+      "2": "FSD",
+      "3": "Aptitude Practices",
+      "4": "Aptitude Practices",
+      "5": "BDAI",
+      "6": "CS",
+      "7": "BCAI"
+    },
+    "SAT": {
+      "1": "BDC LAB",
+      "2": "BDC LAB", 
+      "3": null,
+      "4": "SEP",
+      "5": "FSAI LAB",
+      "6": "FSAI LAB",
+      "7": "FSAI LAB"
+    }
+  },
+  "subjects": [
+    {
+      "subject_code": "23CS0909",
+      "subject_name": "Cloud Computing for AI",
+      "staff": "Mrs.U G Sreehitha"
+    },
+    {
+      "subject_code": "23CS0910", 
+      "subject_name": "Big Data Analytics & AI Applications",
+      "staff": "Mr.T.Muniraj"
+    },
+    {
+      "subject_code": "23CS0911",
+      "subject_name": "Full Stack AI Development", 
+      "staff": "Mrs.G.Nagalakshmi"
+    },
+    {
+      "subject_code": "23CS0925",
+      "subject_name": "Blockchain for AI",
+      "staff": "Dr.N.Babu"
+    },
+    {
+      "subject_code": "23CS0929",
+      "subject_name": "Cybersecurity & AI-driven Threat Detection", 
+      "staff": "Mrs.M.Rekha"
+    },
+    {
+      "subject_code": "23CE0153",
+      "subject_name": "Sustainability in Engineering Practices",
+      "staff": "Mr.D.Srinivasa Murthy"
+    },
+    {
+      "subject_code": "23CS0912",
+      "subject_name": "Big Data & Cloud Computing Lab",
+      "staff": "Mr.T.Muniraj"
+    },
+    {
+      "subject_code": "23CS0913",
+      "subject_name": "Full Stack AI Lab",
+      "staff": "Mrs.G.Nagalakshmi"
+    },
+    {
+      "subject_code": "23HS0818", 
+      "subject_name": "Soft skills",
+      "staff": "Mr.Bulaji Ram Tiwari/Mr.M.S.Prince Charles"
+    },
+    {
+      "subject_code": "23HS0816",
+      "subject_name": "Technical Paper Writing & IPR",
+      "staff": "Mrs.M.Lakshmi Prasanna"
+    }
+  ],
+  "abbreviations_used": {
+    "BCAI": "Blockchain for AI",
+    "CCAI": "Cloud Computing for AI", 
+    "FSD": "Full Stack AI Development",
+    "BDAI": "Big Data Analytics & AI Applications",
+    "CS": "Cybersecurity & AI-driven Threat Detection",
+    "IPR": "Technical Paper Writing & IPR",
+    "SEP": "Sustainability in Engineering Practices",
+    "BDC LAB": "Big Data & Cloud Computing Lab",
+    "FSAI LAB": "Full Stack AI Lab"
+  }
+}
+
+
