@@ -1,0 +1,300 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AI Student Chatbot</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #121212;
+    color: white;
+}
+
+/* CENTER */
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* SPLASH */
+#splash {
+    text-align: center;
+}
+
+#splash p {
+    color: #bbb;
+}
+
+/* LOGIN */
+#login {
+    display: none;
+}
+
+.login-box {
+    background: #1e1e2f;
+    padding: 25px;
+    width: 300px;
+    border-radius: 8px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 10px;
+    background: #2b2b3c;
+    border: none;
+    color: white;
+}
+
+button {
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* DASHBOARD */
+#dashboard {
+    display: none;
+    height: 100vh;
+}
+
+/* NAV */
+.nav {
+    width: 200px;
+    background: #1f1f1f;
+    height: 100%;
+    float: left;
+}
+
+.nav-title {
+    color: #00d4ff;
+    text-align: center;
+    margin: 20px 0;
+    font-weight: bold;
+}
+
+.nav button {
+    width: 100%;
+    padding: 10px 20px;
+    background: #1f1f1f;
+    color: white;
+    text-align: left;
+}
+
+.nav button:hover {
+    background: #2b2b3c;
+}
+
+.nav-section {
+    color: #888;
+    margin: 15px 10px 5px;
+}
+
+/* MAIN */
+.main {
+    margin-left: 200px;
+}
+
+.header {
+    background: #1f1f1f;
+    padding: 15px;
+}
+
+.body {
+    padding: 20px;
+    background: #181818;
+}
+
+.card {
+    background: #2b2b3c;
+    padding: 10px;
+    margin: 10px 50px;
+    border-radius: 5px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- SPLASH -->
+<div id="splash" class="center">
+    <div>
+        <h1>🎓 AI STUDENT CHATBOT</h1>
+        <p>Loading...</p>
+    </div>
+</div>
+
+<!-- LOGIN -->
+<div id="login" class="center">
+    <div class="login-box">
+        <h2>🔐 Login</h2>
+
+        <label>Username</label>
+        <input type="text" id="username">
+
+        <label>Password</label>
+        <input type="password" id="password">
+
+        <p id="status"></p>
+
+        <button style="width:100%; background:#00d4ff;" onclick="checkLogin()">Login</button>
+    </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard">
+    <div class="nav" id="nav"></div>
+
+    <div class="main">
+        <div class="header" id="header"></div>
+
+        <div class="body">
+            <h3 style="color:#00d4ff;">Features</h3>
+            <div id="cards"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+const API_URL = "http://127.0.0.1:5000/login";
+
+// SPLASH
+setTimeout(() => {
+    document.getElementById("splash").style.display = "none";
+    document.getElementById("login").style.display = "flex";
+}, 2000);
+
+// LOGIN
+async function checkLogin() {
+    let user = username.value.trim();
+    let pass = password.value.trim();
+
+    if (!user || !pass) {
+        status.innerText = "⚠️ Enter credentials";
+        status.style.color = "orange";
+        return;
+    }
+
+    try {
+        let res = await fetch(API_URL, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({username: user, password: pass})
+        });
+
+        let data = await res.json();
+
+        if (data.status === "success") {
+            openDashboard(data.role);
+        } else {
+            status.innerText = "❌ Invalid Login";
+            status.style.color = "red";
+        }
+
+    } catch {
+        status.innerText = "⚠️ Server not running";
+        status.style.color = "orange";
+    }
+}
+
+// DASHBOARD
+function openDashboard(role) {
+    login.style.display = "none";
+    dashboard.style.display = "block";
+
+    header.innerText = "Welcome " + role + " 👋";
+
+    createNavigation(role);
+    loadFeatures(role);
+}
+
+// NAVIGATION
+function createNavigation(role) {
+    let count = getNotificationCount();
+
+    let html = `
+        <div class="nav-title">MENU</div>
+
+        <button>🏠 Dashboard</button>
+        <button onclick="openChat()">💬 Chatbot</button>
+        <button onclick="showNotifications()">🔔 Notifications (${count})</button>
+        <button onclick="openAbout()">ℹ About Us</button>
+    `;
+
+    if (role === "admin") {
+        html += `
+            <div class="nav-section">ADMIN</div>
+            <button onclick="openAdmin()">⚙ Admin Panel</button>
+        `;
+    }
+
+    nav.innerHTML = html;
+}
+
+// FEATURES
+function loadFeatures(role) {
+    cards.innerHTML = "";
+
+    function add(text) {
+        cards.innerHTML += `<div class="card">${text}</div>`;
+    }
+
+    if (role === "admin") {
+        add("📅 Add Timetable");
+        add("📝 Add Exams");
+        add("🔔 Send Notifications");
+    } else {
+        add("📅 View Timetable");
+        add("💬 Ask Chatbot");
+        add("🔔 View Notifications");
+    }
+}
+
+// NOTIFICATIONS
+function getNotificationCount() {
+    let data = JSON.parse(localStorage.getItem("notifications")) || [];
+    return data.length;
+}
+
+function showNotifications() {
+    let data = JSON.parse(localStorage.getItem("notifications")) || [];
+
+    if (data.length === 0) {
+        alert("No notifications");
+        return;
+    }
+
+    alert(data.map(n => n.message).join("\n"));
+}
+
+// PLACEHOLDERS
+function openChat() {
+    alert("Chatbot page");
+}
+
+function openAbout() {
+    alert("About page");
+}
+
+function openAdmin() {
+    let msg = prompt("Enter notification:");
+    if (!msg) return;
+
+    let data = JSON.parse(localStorage.getItem("notifications")) || [];
+    data.push({message: msg});
+    localStorage.setItem("notifications", JSON.stringify(data));
+
+    alert("Saved!");
+    createNavigation("admin");
+}
+</script>
+
+</body>
+</html>
+```

@@ -1,0 +1,289 @@
+<body>
+
+<!-- ---------- SIDEBAR ---------- -->
+<div id="sidebar">
+
+    <button onclick="toggleSidebar()">☰</button>
+
+    <h3>Student Assistant</h3>
+
+    <button onclick="showSection('chat')">💬 Chatbot</button>
+
+    <button onclick="showSection('timetable')">📅 Timetable</button>
+
+    <button onclick="showSection('exams')">📝 Exams</button>
+
+    <button onclick="showSection('notifications')">🔔 Notifications</button>
+
+    <button onclick="showSection('about')">ℹ️ About Us</button>
+
+</div>
+
+
+<!-- ---------- MAIN CONTENT ---------- -->
+<div id="main-content">
+
+    <!-- HEADER -->
+    <div id="header">
+        Welcome Student 👋
+    </div>
+
+
+    <!-- ---------- CHATBOT SECTION ---------- -->
+    <div id="chat-section">
+
+        <div id="chat-box"></div>
+
+        <div>
+
+            <input
+                type="text"
+                id="user-input"
+                placeholder="Ask something..."
+            >
+
+            <button onclick="sendMessage()">
+                Send
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ---------- TIMETABLE SECTION ---------- -->
+    <div id="timetable-section" style="display:none;">
+
+        <h2>Timetable</h2>
+
+        <div id="timetable-data"></div>
+
+    </div>
+
+
+    <!-- ---------- EXAMS SECTION ---------- -->
+    <div id="exam-section" style="display:none;">
+
+        <h2>Upcoming Exams</h2>
+
+        <div id="exam-data"></div>
+
+    </div>
+
+
+    <!-- ---------- NOTIFICATION SECTION ---------- -->
+    <div id="notification-section" style="display:none;">
+
+        <h2>Notifications</h2>
+
+        <div id="notification-data"></div>
+
+    </div>
+
+
+    <!-- ---------- ABOUT SECTION ---------- -->
+    <div id="about-section" style="display:none;">
+
+        <h2>About Us</h2>
+
+        <p>
+            AI Student Assistant using Flask
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- ---------- RIGHT PANEL ---------- -->
+<div id="right-panel">
+
+    <h3>Recent Searches</h3>
+
+    <div id="history"></div>
+
+</div>
+
+
+<script>
+
+
+// ---------- SIDEBAR TOGGLE ----------
+function toggleSidebar() {
+
+    let sidebar = document.getElementById("sidebar");
+
+    if (sidebar.style.display === "none") {
+        sidebar.style.display = "block";
+    } else {
+        sidebar.style.display = "none";
+    }
+}
+
+
+// ---------- SHOW SECTIONS ----------
+function showSection(section) {
+
+    document.getElementById("chat-section").style.display = "none";
+    document.getElementById("timetable-section").style.display = "none";
+    document.getElementById("exam-section").style.display = "none";
+    document.getElementById("notification-section").style.display = "none";
+    document.getElementById("about-section").style.display = "none";
+
+
+    if (section === "chat") {
+        document.getElementById("chat-section").style.display = "block";
+    }
+
+    if (section === "timetable") {
+        document.getElementById("timetable-section").style.display = "block";
+        loadTimetable();
+    }
+
+    if (section === "exams") {
+        document.getElementById("exam-section").style.display = "block";
+        loadExams();
+    }
+
+    if (section === "notifications") {
+        document.getElementById("notification-section").style.display = "block";
+        loadNotifications();
+    }
+
+    if (section === "about") {
+        document.getElementById("about-section").style.display = "block";
+    }
+}
+
+
+
+// ---------- CHATBOT ----------
+async function sendMessage() {
+
+    let input = document.getElementById("user-input");
+
+    let message = input.value;
+
+    if (!message) return;
+
+    // USER MESSAGE
+    let chatBox = document.getElementById("chat-box");
+
+    chatBox.innerHTML += `
+        <div>
+            <b>You:</b> ${message}
+        </div>
+    `;
+
+    // SAVE HISTORY
+    document.getElementById("history").innerHTML += `
+        <div>${message}</div>
+    `;
+
+    input.value = "";
+
+    // SEND TO FLASK
+    let response = await fetch("/chat", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+            message: message
+        })
+
+    });
+
+    let data = await response.json();
+
+    // BOT RESPONSE
+    chatBox.innerHTML += `
+        <div>
+            <b>Bot:</b> ${data.response}
+        </div>
+    `;
+
+}
+
+
+
+// ---------- LOAD TIMETABLE ----------
+async function loadTimetable() {
+
+    let response = await fetch("/chat", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+            message: "timetable"
+        })
+
+    });
+
+    let data = await response.json();
+
+    document.getElementById("timetable-data").innerText =
+        data.response;
+}
+
+
+
+// ---------- LOAD EXAMS ----------
+async function loadExams() {
+
+    let response = await fetch("/chat", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+            message: "exam"
+        })
+
+    });
+
+    let data = await response.json();
+
+    document.getElementById("exam-data").innerText =
+        data.response;
+}
+
+
+
+// ---------- LOAD NOTIFICATIONS ----------
+async function loadNotifications() {
+
+    let response = await fetch("/chat", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+            message: "notification"
+        })
+
+    });
+
+    let data = await response.json();
+
+    document.getElementById("notification-data").innerText =
+        data.response;
+}
+
+
+</script>
+
+</body>

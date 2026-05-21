@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>AI Student Assistant</title>
+
+<style>
+
+/* ================= BODY ================= */
+
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#121212;
+    color:white;
+    overflow:hidden;
+}
+
+
+/* ================= CENTER ================= */
+
+.center{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+
+/* ================= SPLASH ================= */
+
+#splash{
+    text-align:center;
+}
+
+#splash h1{
+    color:#00d4ff;
+}
+
+#splash p{
+    color:#aaa;
+}
+
+
+/* ================= LOGIN ================= */
+
+#login{
+    display:none;
+}
+
+.login-box{
+    width:320px;
+    background:#1e1e2f;
+    padding:25px;
+    border-radius:10px;
+}
+
+.login-box h2{
+    text-align:center;
+}
+
+.login-box input{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    background:#2b2b3c;
+    border:none;
+    color:white;
+    border-radius:5px;
+    box-sizing:border-box;
+}
+
+.login-box button{
+    width:100%;
+    padding:12px;
+    margin-top:15px;
+    border:none;
+    background:#00d4ff;
+    cursor:pointer;
+    font-weight:bold;
+    border-radius:5px;
+}
+
+#status{
+    text-align:center;
+    margin-top:10px;
+}
+
+
+/* ================= DASHBOARD ================= */
+
+#dashboard{
+    display:none;
+    height:100vh;
+}
+
+
+/* ================= SIDEBAR ================= */
+
+.sidebar{
+    width:220px;
+    background:#1f1f1f;
+    height:100vh;
+    float:left;
+    overflow:auto;
+}
+
+.sidebar-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px;
+}
+
+.sidebar h2{
+    margin:0;
+    color:#00d4ff;
+}
+
+.sidebar button{
+    width:100%;
+    padding:14px;
+    border:none;
+    background:none;
+    color:white;
+    text-align:left;
+    cursor:pointer;
+}
+
+.sidebar button:hover{
+    background:#2b2b3c;
+}
+
+
+/* ================= MAIN ================= */
+
+.main{
+    margin-left:220px;
+    margin-right:250px;
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+}
+
+
+/* ================= HEADER ================= */
+
+.header{
+    background:#1f1f1f;
+    padding:18px;
+    font-size:20px;
+    font-weight:bold;
+}
+
+
+/* ================= BODY ================= */
+
+.body{
+    flex:1;
+    overflow:auto;
+    padding:20px;
+    background:#181818;
+}
+
+
+/* ================= CHAT ================= */
+
+.chat-header{
+    font-size:22px;
+    margin-bottom:15px;
+}
+
+.chat-area{
+    height:420px;
+    overflow-y:auto;
+    background:#1e1e2f;
+    padding:15px;
+    border-radius:8px;
+}
+
+
+/* USER */
+
+.user{
+    background:#00d4ff;
+    color:black;
+    padding:10px;
+    border-radius:8px;
+    margin:10px 0;
+    width:fit-content;
+    margin-left:auto;
+}
+
+
+/* BOT */
+
+.bot{
+    background:#2b2b3c;
+    padding:10px;
+    border-radius:8px;
+    margin:10px 0;
+    width:fit-content;
+    max-width:80%;
+}
+
+
+/* INPUT AREA */
+
+.bottom{
+    display:flex;
+    gap:10px;
+    margin-top:15px;
+}
+
+.bottom input{
+    flex:1;
+    padding:12px;
+    background:#2b2b3c;
+    border:none;
+    color:white;
+    border-radius:5px;
+}
+
+.bottom button{
+    padding:12px 18px;
+    border:none;
+    background:#00d4ff;
+    cursor:pointer;
+    border-radius:5px;
+}
+
+
+/* ================= RIGHT PANEL ================= */
+
+.right-panel{
+    position:fixed;
+    right:0;
+    top:0;
+    width:250px;
+    height:100vh;
+    background:#1f1f1f;
+    padding:15px;
+    overflow:auto;
+}
+
+.right-panel h3{
+    color:#00d4ff;
+}
+
+.history-item{
+    background:#2b2b3c;
+    padding:10px;
+    border-radius:5px;
+    margin-bottom:10px;
+}
+
+
+/* ================= SECTIONS ================= */
+
+.section{
+    background:#1e1e2f;
+    padding:20px;
+    border-radius:8px;
+}
+
+
+/* ================= FOOTER ================= */
+
+.footer{
+    background:#1f1f1f;
+    text-align:center;
+    padding:10px;
+    color:#aaa;
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+
+<!-- ================= SPLASH ================= -->
+
+<div id="splash"
+     class="center">
+
+    <div>
+
+        <h1>🎓 AI STUDENT ASSISTANT</h1>
+
+        <p>Loading...</p>
+
+    </div>
+
+</div>
+
+
+
+<!-- ================= LOGIN ================= -->
+
+<div id="login"
+     class="center">
+
+    <div class="login-box">
+
+        <h2>🔐 Login</h2>
+
+        <input type="text"
+               id="username"
+               placeholder="Username">
+
+        <input type="password"
+               id="password"
+               placeholder="Password">
+
+        <button onclick="checkLogin()">
+
+            Login
+
+        </button>
+
+        <p id="status"></p>
+
+    </div>
+
+</div>
+
+
+
+<!-- ================= DASHBOARD ================= -->
+
+<div id="dashboard">
+
+
+    <!-- ========== SIDEBAR ========== -->
+
+    <div class="sidebar"
+         id="sidebar">
+
+        <div class="sidebar-top">
+
+            <h2>MENU</h2>
+
+            <button onclick="toggleSidebar()">
+
+                ☰
+
+            </button>
+
+        </div>
+
+
+        <button onclick="showSection('chat')">
+            💬 Chatbot
+        </button>
+
+        <button onclick="showSection('timetable')">
+            📅 Timetable
+        </button>
+
+        <button onclick="showSection('exam')">
+            📝 Exams
+        </button>
+
+        <button onclick="showSection('notification')">
+            🔔 Notifications
+        </button>
+
+        <button onclick="showSection('about')">
+            ℹ About Us
+        </button>
+
+    </div>
+
+
+
+    <!-- ========== MAIN ========== -->
+
+    <div class="main">
+
+
+        <!-- HEADER -->
+
+        <div class="header"
+             id="header">
+
+            Welcome Student 👋
+
+        </div>
+
+
+
+        <!-- BODY -->
+
+        <div class="body">
+
+
+            <!-- CHAT -->
+
+            <div id="chat-section">
+
+                <div class="chat-header">
+
+                    💬 AI Student Chatbot
+
+                </div>
+
+
+                <div id="chatArea"
+                     class="chat-area">
+
+                </div>
+
+
+                <div class="bottom">
+
+                    <input type="text"
+                           id="input"
+                           placeholder="Ask something...">
+
+                    <button onclick="sendMessage()">
+                        Send
+                    </button>
+
+                    <button onclick="clearChat()">
+                        Clear
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- TIMETABLE -->
+
+            <div id="timetable-section"
+                 class="section"
+                 style="display:none;">
+
+                <h2>📅 Timetable</h2>
+
+                <div id="timetable-data"></div>
+
+            </div>
+
+
+
+            <!-- EXAMS -->
+
+            <div id="exam-section"
+                 class="section"
+                 style="display:none;">
+
+                <h2>📝 Exams</h2>
+
+                <div id="exam-data"></div>
+
+            </div>
+
+
+
+            <!-- NOTIFICATIONS -->
+
+            <div id="notification-section"
+                 class="section"
+                 style="display:none;">
+
+                <h2>🔔 Notifications</h2>
+
+                <div id="notification-data"></div>
+
+            </div>
+
+
+
+            <!-- ABOUT -->
+
+            <div id="about-section"
+                 class="section"
+                 style="display:none;">
+
+                <h2>🤖 About Us</h2>
+
+                <p>
+                    AI-powered student assistant chatbot
+                    using Flask framework.
+                </p>
+
+                <p>
+                    <b>Frontend:</b> S Harika
+                </p>
+
+                <p>
+                    <b>Backend:</b> V Pallavi
+                </p>
+
+                <p>
+                    <b>AI Developer:</b> D Sreehari
+                </p>
+
+                <p>
+                    Siddharth Institute of Engineering
+                    and Technology
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- FOOTER -->
+
+        <div class="footer">
+
+            AI Student Assistant © 2026
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ========== RIGHT PANEL ========== -->
+
+    <div class="right-panel">
+
+        <h3>🕘 Recent Searches</h3>
+
+        <div id="history"></div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ================= SCRIPT ================= -->
+
+<script>
+
+
+// ================= SPLASH =================
+
+setTimeout(() => {
+
+    document.getElementById("splash").style.display =
+        "none";
+
+    document.getElementById("login").style.display =
+        "flex";
+
+}, 2000);
+
+
+
+
+// ================= LOGIN =================
+
+async function checkLogin(){
+
+    let username =
+        document.getElementById("username").value;
+
+    let password =
+        document.getElementById("password").value;
+
+
+    let status =
+        document.getElementById("status");
+
+
+    if(username === "" || password === ""){
+
+        status.innerHTML =
+            "⚠️ Enter credentials";
+
+        status.style.color =
+            "orange";
+
+        return;
+
+    }
+
+
+    try{
+
+        let response = await fetch("/login", {
+
+            method:"POST",
+
+            headers:{
+                "Content-Type":"application/json"
+            },
+
+            body:JSON.stringify({
+                username,
+                password
+            })
+
+        });
+
+
+        let data =
+            await response.json();
+
+
+        if(data.success){
+
+            document.getElementById("login").style.display =
+                "none";
+
+            document.getElementById("dashboard").style.display =
+                "block";
+
+        }
+
+        else{
+
+            status.innerHTML =
+                "❌ Invalid Login";
+
+            status.style.color =
+                "red";
+
+        }
+
+    }
+
+    catch(error){
+
+        status.innerHTML =
+            "⚠️ Server Error";
+
+        status.style.color =
+            "orange";
+
+    }
+
+}
+
+
+
+
+// ================= SIDEBAR =================
+
+function toggleSidebar(){
+
+    let sidebar =
+        document.getElementById("sidebar");
+
+
+    if(sidebar.style.display === "none"){
+
+        sidebar.style.display =
+            "block";
+
+    }
+
+    else{
+
+        sidebar.style.display =
+            "none";
+
+    }
+
+}
+
+
+
+
+// ================= SHOW SECTION =================
+
+function showSection(section){
+
+    document.getElementById("chat-section").style.display =
+        "none";
+
+    document.getElementById("timetable-section").style.display =
+        "none";
+
+    document.getElementById("exam-section").style.display =
+        "none";
+
+    document.getElementById("notification-section").style.display =
+        "none";
+
+    document.getElementById("about-section").style.display =
+        "none";
+
+
+    if(section === "chat"){
+
+        document.getElementById("chat-section").style.display =
+            "block";
+
+    }
+
+
+    if(section === "timetable"){
+
+        document.getElementById("timetable-section").style.display =
+            "block";
+
+        loadTimetable();
+
+    }
+
+
+    if(section === "exam"){
+
+        document.getElementById("exam-section").style.display =
+            "block";
+
+        loadExams();
+
+    }
+
+
+    if(section === "notification"){
+
+        document.getElementById("notification-section").style.display =
+            "block";
+
+        loadNotifications();
+
+    }
+
+
+    if(section === "about"){
+
+        document.getElementById("about-section").style.display =
+            "block";
+
+    }
+
+}
+
+
+
+
+// ================= SEND MESSAGE =================
+
+async function sendMessage(){
+
+    let input =
+        document.getElementById("input");
+
+    let message =
+        input.value.trim();
+
+
+    if(message === "")
+        return;
+
+
+    let area =
+        document.getElementById("chatArea");
+
+
+    // USER MESSAGE
+    area.innerHTML += `
+        <div class="user">
+            ${message}
+        </div>
+    `;
+
+
+    // HISTORY
+    document.getElementById("history").innerHTML += `
+        <div class="history-item">
+            ${message}
+        </div>
+    `;
+
+
+    input.value = "";
+
+
+    // BOT
+    let response = await fetch("/chat", {
+
+        method:"POST",
+
+        headers:{
+            "Content-Type":"application/json"
+        },
+
+        body:JSON.stringify({
+            message
+        })
+
+    });
+
+
+    let data =
+        await response.json();
+
+
+    area.innerHTML += `
+        <div class="bot">
+            ${data.response}
+        </div>
+    `;
+
+
+    area.scrollTop =
+        area.scrollHeight;
+
+}
+
+
+
+
+// ================= ENTER =================
+
+document.addEventListener("keypress", function(e){
+
+    if(e.key === "Enter"){
+
+        sendMessage();
+
+    }
+
+});
+
+
+
+
+// ================= CLEAR =================
+
+function clearChat(){
+
+    document.getElementById("chatArea").innerHTML =
+        "";
+
+}
+
+
+
+
+// ================= TIMETABLE =================
+
+async function loadTimetable(){
+
+    let response = await fetch("/chat", {
+
+        method:"POST",
+
+        headers:{
+            "Content-Type":"application/json"
+        },
+
+        body:JSON.stringify({
+            message:"today timetable"
+        })
+
+    });
+
+
+    let data =
+        await response.json();
+
+
+    document.getElementById("timetable-data").innerText =
+        data.response;
+
+}
+
+
+
+
+// ================= EXAMS =================
+
+async function loadExams(){
+
+    let response = await fetch("/chat", {
+
+        method:"POST",
+
+        headers:{
+            "Content-Type":"application/json"
+        },
+
+        body:JSON.stringify({
+            message:"exam"
+        })
+
+    });
+
+
+    let data =
+        await response.json();
+
+
+    document.getElementById("exam-data").innerText =
+        data.response;
+
+}
+
+
+
+
+// ================= NOTIFICATIONS =================
+
+async function loadNotifications(){
+
+    let response =
+        await fetch("/notifications");
+
+
+    let data =
+        await response.json();
+
+
+    let output = "";
+
+
+    data.reverse().forEach(item => {
+
+        output += `
+            <div class="history-item">
+
+                <b>${item.type}</b>
+
+                <p>${item.message}</p>
+
+            </div>
+        `;
+
+    });
+
+
+    document.getElementById("notification-data").innerHTML =
+        output;
+
+}
+
+</script>
+
+</body>
+</html>

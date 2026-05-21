@@ -1,215 +1,345 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-  <title>Notification + About Page</title>
 
-  <style>
-    body {
-      font-family: Arial;
-      padding: 20px;
-    }
+    <!-- ============================================== -->
+    <!-- META -->
+    <!-- ============================================== -->
+    <meta charset="UTF-8">
 
-    /* 🔔 Notification */
-    .notification {
-      position: relative;
-      display: inline-block;
-      cursor: pointer;
-      font-size: 30px;
-    }
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-    .badge {
-      position: absolute;
-      top: -5px;
-      right: 0px;
-      background: red;
-      color: white;
-      border-radius: 50%;
-      padding: 5px 8px;
-      font-size: 12px;
-    }
+    <title>AI Student Chatbot</title>
 
-    .dropdown {
-      display: none;
-      position: absolute;
-      right: 0;
-      margin-top: 10px;
-      background: #fff;
-      width: 280px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      border-radius: 10px;
-      overflow: hidden;
-      z-index: 100;
-    }
+    <!-- ============================================== -->
+    <!-- GOOGLE FONT -->
+    <!-- ============================================== -->
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
 
-    .dropdown-header {
-      background: #0073b1;
-      color: white;
-      padding: 10px;
-      font-weight: bold;
-    }
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
 
-    .dropdown p {
-      padding: 10px;
-      margin: 0;
-      border-bottom: 1px solid #eee;
-      font-size: 14px;
-    }
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
 
-    .dropdown p:hover {
-      background: #f5f5f5;
-    }
+    <!-- ============================================== -->
+    <!-- MAIN CSS -->
+    <!-- ============================================== -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}?v=2">
 
-    .show {
-      display: block;
-    }
+    <!-- ============================================== -->
+    <!-- FAVICON -->
+    <!-- ============================================== -->
+    <link rel="icon"
+          type="image/x-icon"
+          href="{{ url_for('static', filename='favicon.ico') }}">
 
-    .clear-btn {
-      text-align: center;
-      padding: 10px;
-      cursor: pointer;
-      background: #f0f0f0;
-      font-size: 14px;
-    }
-
-    .clear-btn:hover {
-      background: #ddd;
-    }
-
-    /* 📌 About Section */
-    .about {
-      margin-top: 50px;
-      text-align: center;
-    }
-
-    .logo {
-      margin-bottom: 20px;
-    }
-
-    .logo img {
-      width: 120px;
-    }
-
-    .team {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      margin-top: 20px;
-      flex-wrap: wrap;
-    }
-
-    .card {
-      width: 180px;
-      padding: 15px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      background: #fff;
-      transition: 0.3s;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-    }
-
-    .card img {
-      width: 100%;
-      border-radius: 10px;
-    }
-
-    .card h3 {
-      margin: 10px 0 5px;
-    }
-
-    .card p {
-      color: gray;
-      font-size: 14px;
-    }
-  </style>
 </head>
 
 <body>
 
-<!-- 🔔 Notification -->
-<div class="notification" onclick="toggleNotification()">
-  🔔
-  <span id="count" class="badge">3</span>
+<!-- ================================================== -->
+<!-- SPLASH SCREEN -->
+<!-- ================================================== -->
+<div id="splash" class="center">
 
-  <div id="dropdown" class="dropdown">
-    <div class="dropdown-header">Notifications</div>
+    <div class="splash-content">
 
-    <div id="list">
-      <p>📩 New message received</p>
-      <p>⚙️ System updated</p>
-      <p>👤 New user registered</p>
+        <!-- LOGO -->
+        <img src="{{ url_for('static', filename='logo.png') }}"
+             class="logo"
+             alt="Logo">
+
+        <!-- TITLE -->
+        <h1>🎓 AI STUDENT CHATBOT</h1>
+
+        <!-- SUBTITLE -->
+        <p>Loading AI System...</p>
+
+        <!-- LOADER -->
+        <div class="loader"></div>
+
     </div>
 
-    <div class="clear-btn" onclick="clearNotifications(event)">
-      Clear All
-    </div>
-  </div>
 </div>
 
-<!-- 📌 About Section -->
-<div class="about">
+<!-- ================================================== -->
+<!-- LOGIN PAGE -->
+<!-- ================================================== -->
+<div id="login"
+     class="center"
+     style="display: none;">
 
-  <div class="logo">
-    <img src="images/logo.png" alt="AI Chatbot Logo">
-  </div>
+    <div class="login-box">
 
-  <h2>About Us</h2>
-  <p>Meet our AI chatbot team</p>
+        <!-- LOGIN TITLE -->
+        <h2>Welcome Back 👋</h2>
 
-  <div class="team">
+        <p class="login-subtitle">
+            Login to Continue
+        </p>
 
-    <div class="card">
-      <img src="images/harika.jpg">
-      <h3>Harika</h3>
-      <p>Frontend Developer</p>
+        <!-- USERNAME -->
+        <div class="input-group">
+
+            <span class="input-addon">👤</span>
+
+            <input type="text"
+                   id="username"
+                   placeholder="Enter Username"
+                   aria-label="Username"
+                   required>
+
+        </div>
+
+        <!-- PASSWORD -->
+        <div class="input-group">
+
+            <span class="input-addon">🔒</span>
+
+            <input type="password"
+                   id="password"
+                   placeholder="Enter Password"
+                   aria-label="Password"
+                   required>
+
+        </div>
+
+        <!-- LOGIN BUTTON -->
+        <button class="login-btn"
+                onclick="checkLogin()">
+
+            🚀 Login
+
+        </button>
+
+        <!-- STATUS -->
+        <p id="status"></p>
+
     </div>
 
-    <div class="card">
-      <img src="images/pallavi.jpg">
-      <h3>Pallavi</h3>
-      <p>Backend Developer</p>
-    </div>
-
-    <div class="card">
-      <img src="images/sreehari.jpg">
-      <h3>Sreehari</h3>
-      <p>AI Developer</p>
-    </div>
-
-  </div>
 </div>
 
-<script>
-function toggleNotification() {
-  document.getElementById("dropdown").classList.toggle("show");
-}
+<!-- ================================================== -->
+<!-- DASHBOARD -->
+<!-- ================================================== -->
+<div id="dashboard"
+     style="display: none;">
 
-// Clear notifications
-function clearNotifications(event) {
-  event.stopPropagation();
-  document.getElementById("list").innerHTML = "";
-  document.getElementById("count").textContent = "0";
-}
+    <!-- ============================================== -->
+    <!-- SIDEBAR -->
+    <!-- ============================================== -->
+    <div class="sidebar"
+         id="sidebar">
 
-// Add notification dynamically
-function addNotification(msg) {
-  let list = document.getElementById("list");
+        <!-- LOGO -->
+        <div class="sidebar-logo">
+            🤖 AI BOT
+        </div>
 
-  let p = document.createElement("p");
-  p.textContent = msg;
-  list.appendChild(p);
+        <!-- MENU -->
+        <button onclick="toggleMenu()">
+            ☰ Menu
+        </button>
 
-  let count = document.getElementById("count");
-  count.textContent = parseInt(count.textContent) + 1;
-}
+        <!-- CHAT -->
+        <button onclick="showSection('chat')">
+            💬 Chatbot
+        </button>
 
-// Example auto notification
-setTimeout(() => {
-  addNotification("New chat message received");
-}, 2000);
-</script>
+        <!-- NOTIFICATIONS -->
+        <button onclick="showSection('notification')">
+            🔔 Notifications
+        </button>
+
+        <!-- ABOUT -->
+        <button onclick="showSection('about')">
+            ℹ About
+        </button>
+
+        <!-- ADMIN PANEL -->
+        <button id="admin-btn"
+                style="display: none;"
+                onclick="window.location.href='/admin'">
+
+            ⚙️ Admin Panel
+
+        </button>
+
+    </div>
+
+    <!-- ============================================== -->
+    <!-- MAIN -->
+    <!-- ============================================== -->
+    <div class="main">
+
+        <!-- HEADER -->
+        <div class="header">
+
+            <div class="header-left">
+                🎓 AI Student Assistant
+            </div>
+
+            <div class="header-right">
+                <span class="status-indicator">🟢</span>
+                Online
+            </div>
+
+        </div>
+
+        <!-- BODY -->
+        <div class="body">
+
+            <!-- ====================================== -->
+            <!-- CHAT SECTION -->
+            <!-- ====================================== -->
+            <div id="chat-section"
+                 class="section">
+
+                <!-- CHAT AREA -->
+                <div id="chatArea">
+
+                    <!-- BOT MESSAGE -->
+                    <div class="bot-msg">
+
+                        <b>Bot:</b><br>
+
+                        Hello 👋<br>
+                        Welcome to AI Student Chatbot.<br>
+                        Ask me anything!
+
+                    </div>
+
+                </div>
+
+                <!-- ================================== -->
+                <!-- BOTTOM INPUT -->
+                <!-- ================================== -->
+                <div class="bottom">
+
+                    <!-- CHAT INPUT -->
+                    <div class="chat-input-box">
+
+                        <span class="input-icon">
+                            💬
+                        </span>
+
+                        <input type="text"
+                               id="input"
+                               placeholder="Ask something..."
+                               aria-label="Chat Input">
+
+                    </div>
+
+                    <!-- SEND -->
+                    <button class="send-btn"
+                            onclick="sendMessage()"
+                            aria-label="Send Message">
+
+                        ➤
+
+                    </button>
+
+                    <!-- MIC -->
+                    <button id="micButton"
+                            class="mic-btn"
+                            onclick="startVoiceInput()"
+                            aria-label="Voice Input">
+
+                        🎤
+
+                    </button>
+
+                    <!-- CLEAR -->
+                    <button class="clear-btn"
+                            onclick="clearChat()"
+                            aria-label="Clear Chat">
+
+                        ✖
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            <!-- ====================================== -->
+            <!-- NOTIFICATIONS -->
+            <!-- ====================================== -->
+            <div id="notification-section"
+                 class="section"
+                 style="display: none;">
+
+                <h2>🔔 Notifications</h2>
+
+                <div id="notification-data">
+
+                    <div class="notification-card">
+                        No Notifications Available
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ====================================== -->
+            <!-- ABOUT -->
+            <!-- ====================================== -->
+            <div id="about-section"
+                 class="section"
+                 style="display: none;">
+
+                <h2>ℹ About Us</h2>
+
+                <p class="about-text">
+
+                    AI Student Chatbot is a modern intelligent
+                    assistant created for students.
+
+                    <br><br>
+
+                    It helps students with:
+
+                    <br><br>
+
+                    ✅ AI Chatbot Support<br>
+                    ✅ Voice Recognition<br>
+                    ✅ Text To Speech<br>
+                    ✅ Smart Notifications<br>
+                    ✅ Student Dashboard<br>
+                    ✅ Fast Academic Support
+
+                    <br><br>
+
+                    Built using:
+
+                    <br><br>
+
+                    🔹 Flask Backend<br>
+                    🔹 HTML CSS JavaScript<br>
+                    🔹 AI Chatbot Logic<br>
+                    🔹 Modern UI Design
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ================================================== -->
+<!-- JAVASCRIPT -->
+<!-- ================================================== -->
+<script src="{{ url_for('static', filename='script.js') }}?v=2"></script>
 
 </body>
+
 </html>
