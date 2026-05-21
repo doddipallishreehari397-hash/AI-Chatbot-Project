@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-from backend.chatbot_logic import chatbot_response
+from chatbot_logic import chatbot_response
 
 import json
 import os
